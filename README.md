@@ -1,30 +1,27 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Linkit
+## Overview
+Linkit is a basic LinkTree clone but with a couple of differences. First is that the link pamphlet that is generated will need to expire after some duration, and second is that you can make anonymous circulars. This project will be built with Next.js, React, and GraphQL.
 
-## Getting Started
+## User Requirements
+The project should allow the user to do the below at the minimum:
+- make a pamphlet with multiple links with different names
+- make a pamphlet without having to register
 
-First, run the development server:
+Secondary requirements for the project expand on the above by letting the user do the below:
+- create an account using existing socials(FB, Google, etc) and create/ read/ update/ delete pamphlets attached to said account
+- delete your account
 
-```bash
-npm run dev
-# or
-yarn dev
+## Technical Requirements
+The project has the below requirements:
+- deploys via CI and automates tags
+- uses GraphQL instead of the traditional REST API
+- uses Prettier and pre-commit hooks
+- if user auth is involved, use Permit or Grant instead of Passport
+- deploys thru Heroku
+
+## Roadmap
+Initial roadmap looks roughly like the below:
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/import?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+  init research -> basic backend set up -> set up the React app -> set up adding anonymous pamphlets -> set up proper data flow
+```
+This would probably let us hit v0.5.0 and probably would take 2-3 months(underestimates not withstanding).
