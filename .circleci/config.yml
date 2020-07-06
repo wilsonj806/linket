@@ -1,0 +1,45 @@
+version: 2.1
+orbs:
+  node: circleci/node@1.1.6
+jobs:
+  # TEST JavaScript
+  test-code:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      # NOTE CircleCI Caches are immutable so if a cache looks too small, you'll need to save to a new cache
+      - restore_cache:
+          key: v0-npm-cache-{{ checksum "package-lock.json"}}
+      # CircleCI seems to start a new terminal when you run each script
+      - run: npm ci
+      - save_cache:
+        # Need to add the path for the package-lock file or the checksum fails!
+          key: v0-npm-cache-{{ checksum "package-lock.json"}}
+          paths:
+            - ./node_modules
+      - run: echo "Testing app"
+  build-app:
+    executor:
+      name: node/default
+    steps:
+      - checkout
+      - restore_cache:
+          key: v0-npm-cache-{{ checksum "package-lock.json"}}
+      # Build the Next app
+      - run: npm run build
+      # Persisting the build folder
+      - persist_to_workspace:
+          root: .
+          # Persist the .next directory to the workspace
+          paths:
+            - .next
+
+# CI Workflow/ Pipeline
+workflows:
+  build-deploy:
+    jobs:
+      - test-react
+      - build-app:
+          requires:
+            - test-react
