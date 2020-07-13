@@ -5,7 +5,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "knex:migrate": "knex migrate:latest",
+    "knex:seed": "knex seed:run",
+    "knex:dev": "npm run knex:migrate && npm run knex:seed"
   },
   "dependencies": {
     "@apollo/react-hooks": "^3.1.5",
