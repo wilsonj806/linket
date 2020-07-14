@@ -7,19 +7,29 @@ exports.seed = function (knex) {
       return knex("pamphlets").insert([
         {
           id: 1,
-          pamphlet_uri: "nice-quirky-pig",
+          pamphlet_slug: "nice-quirky-pig",
           created_at: knex.fn.now(),
-          links_array: ["https://devhints.io/knex#connect-1"],
+          links_array: [
+            "https://devhints.io/knex#connect-1",
+            "https://devhints.io/knex#connect-1",
+            "https://devhints.io/knex#connect-1",
+            "https://devhints.io/knex#connect-1",
+          ],
         },
         {
           id: 2,
-          pamphlet_uri: "annoyed-groggy-dolphin",
+          pamphlet_slug: "annoyed-groggy-dolphin",
           created_at: "2020-01-01T00:00:00-05:00",
-          links_array: ["https://devhints.io/knex#connect-1"],
+          links_array: [
+            "https://devhints.io/knex#connect-1",
+            "https://devhints.io/knex#connect-1",
+            "https://devhints.io/knex#connect-1",
+            "https://devhints.io/knex#connect-1",
+          ],
         },
         {
           id: 3,
-          pamphlet_uri: "angry-hyper-ant",
+          pamphlet_slug: "angry-hyper-ant",
           created_at: knex.fn.now(),
           links_array: ["https://devhints.io/knex#connect-1"],
         },
