@@ -7,7 +7,7 @@ exports.seed = function (knex) {
       return knex("pamphlets").insert([
         {
           id: 1,
-          pamphlet_slug: "nice-quirky-pig",
+          pamphlet_slug: "nicequirkypig",
           created_at: knex.fn.now(),
           links_array: [
             "https://devhints.io/knex#connect-1",
@@ -18,7 +18,7 @@ exports.seed = function (knex) {
         },
         {
           id: 2,
-          pamphlet_slug: "annoyed-groggy-dolphin",
+          pamphlet_slug: "annoyedgroggydolphin",
           created_at: "2020-01-01T00:00:00-05:00",
           links_array: [
             "https://devhints.io/knex#connect-1",
@@ -29,7 +29,7 @@ exports.seed = function (knex) {
         },
         {
           id: 3,
-          pamphlet_slug: "angry-hyper-ant",
+          pamphlet_slug: "angryhyperant",
           created_at: knex.fn.now(),
           links_array: ["https://devhints.io/knex#connect-1"],
         },
