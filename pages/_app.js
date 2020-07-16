@@ -8,11 +8,11 @@ export const endpoint =
     ? ""
     : "http://localhost:3000/api/graphql";
 
-function CustomApp({ Component, pageProps }) {
-  const client = new ApolloClient({
-    uri: endpoint,
-  });
+export const client = new ApolloClient({
+  uri: endpoint,
+});
 
+function CustomApp({ Component, pageProps }) {
   return (
     <ApolloProvider client={client}>
       <Component {...pageProps} />
