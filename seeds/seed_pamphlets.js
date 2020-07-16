@@ -9,29 +9,33 @@ exports.seed = function (knex) {
           id: 1,
           pamphlet_slug: "nicequirkypig",
           created_at: knex.fn.now(),
-          links_array: [
-            "https://devhints.io/knex#connect-1",
-            "https://devhints.io/knex#connect-1",
-            "https://devhints.io/knex#connect-1",
-            "https://devhints.io/knex#connect-1",
-          ],
+          links_array: JSON.stringify([
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+          ]),
         },
         {
           id: 2,
           pamphlet_slug: "annoyedgroggydolphin",
           created_at: "2020-01-01T00:00:00-05:00",
-          links_array: [
-            "https://devhints.io/knex#connect-1",
-            "https://devhints.io/knex#connect-1",
-            "https://devhints.io/knex#connect-1",
-            "https://devhints.io/knex#connect-1",
-          ],
+          links_array: JSON.stringify([
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+          ]),
         },
         {
           id: 3,
           pamphlet_slug: "angryhyperant",
           created_at: knex.fn.now(),
-          links_array: ["https://devhints.io/knex#connect-1"],
+          links_array: JSON.stringify([
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+            { link: "https://devhints.io/knex#connect-1", name: "baby shark" },
+          ]),
         },
       ]);
     });
