@@ -22,7 +22,12 @@ const typeDefs = gql`
     id: Int!
     user: String!
     pamphlet_slug: String!
-    links_array: [String!]!
+    links_array: [LinkObj!]!
+  }
+
+  type LinkObj {
+    link: String!
+    name: String!
   }
 `;
 
