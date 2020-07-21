@@ -18,6 +18,10 @@ const typeDefs = gql`
     pamphlet(pamphlet_slug: String!): Pamphlet!
   }
 
+  type Mutation {
+    createPamphlet(linksArray: [InputLinkObj!]!): PamphletReturn
+  }
+
   type Pamphlet {
     id: Int!
     user: String!
@@ -25,7 +29,17 @@ const typeDefs = gql`
     links_array: [LinkObj!]!
   }
 
+  type PamphletReturn {
+    user: String!
+    pamphlet_slug: String!
+  }
+
   type LinkObj {
+    link: String!
+    name: String!
+  }
+
+  input InputLinkObj {
     link: String!
     name: String!
   }
@@ -33,7 +47,7 @@ const typeDefs = gql`
 
 const resolvers = {
   Query: {
-    pamphlet: (parent, args, context) => {
+    pamphlet: (_, args, __) => {
       return db
         .column("id", "pamphlet_slug", "links_array", "user")
         .select()
@@ -42,6 +56,19 @@ const resolvers = {
         .where({
           pamphlet_slug: args.pamphlet_slug,
         });
+    },
+  },
+
+  Mutation: {
+    createPamphlet: (_, { linksArray }, __) => {
+      // generate pamphlet slug
+      // post to database
+      console.log(args);
+
+      return {
+        pamphlet_slug: "jjjj",
+        user: "ano",
+      };
     },
   },
 };
