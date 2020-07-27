@@ -1,17 +1,5 @@
 import { ApolloServer, gql } from "apollo-server-micro";
-import knex from "knex";
-// import Cors from 'micro-cors'
-// import DataLoader from 'dataloader'
-
-const db = knex({
-  client: "postgres",
-  connection: {
-    host: process.env.POSTGRES_HOST,
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
-    database: process.env.POSTGRES_DB,
-  },
-});
+import db from "../../db/config";
 
 const typeDefs = gql`
   type Query {
