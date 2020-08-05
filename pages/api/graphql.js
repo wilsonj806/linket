@@ -21,6 +21,7 @@ const typeDefs = gql`
   type PamphletReturn {
     user: String!
     pamphlet_slug: String!
+    links_array: [LinkObj!]!
   }
 
   type LinkObj {
@@ -62,14 +63,13 @@ const resolvers = {
       //     if (value.length > 0) {
       //     }
       //   })
-
       // Post to the database and return the result
       return db("pamphlets")
-        .returning(["pamphlet_slug", "user"])
-        .insert({ links_array: linksArray, pamphlet_slug: slug })
-        .then((vals) => {
-          return vals[0];
-        });
+        .returning(["pamphlet_slug", "user", "links_array"])
+        .insert([
+          { links_array: JSON.stringify(linksArray), pamphlet_slug: slug },
+        ])
+        .then((vals) => vals[0]);
     },
   },
 };

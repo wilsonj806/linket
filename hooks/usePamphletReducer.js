@@ -1,8 +1,28 @@
 import { useReducer } from "react";
 import { makeActionCreator, createReducer } from "./reducerFactory";
+import { gql, useMutation } from "@apollo/client";
+
+const ADD_PAMPHLET = gql`
+  mutation createPamphlet($linksArray: [InputLinkObj!]!) {
+    createPamphlet(linksArray: $linksArray) {
+      user
+      pamphlet_slug
+      links_array {
+        name
+        link
+      }
+    }
+  }
+`;
 
 const addLink = makeActionCreator("ADD_LINK");
-const updateEntry = makeActionCreator("UPDATE_ENTRY", "index", "name", "url");
+const addPamphletLink = makeActionCreator(
+  "ADD_PAMPHLET_LINK",
+  "user",
+  "pamphlet_slug",
+  "links_array"
+);
+const updateEntry = makeActionCreator("UPDATE_ENTRY", "index", "name", "link");
 const deleteEntry = makeActionCreator("DELETE_ENTRY", "index");
 const addError = makeActionCreator("ADD_ERROR", "error");
 const resetError = makeActionCreator("RESET_ERROR");
@@ -11,27 +31,77 @@ const resetError = makeActionCreator("RESET_ERROR");
  * State shape:
  * {
  *   links: [],
- *   error: ''
+ *   error: '',
+ *   pamphlet_link: ''
  * }
  *
  * links is an array of objects with shape:
  * { name: String, url: String }
+ *
+ * Mutation flow:
+ * - Press submit
+ * - Reducer dispatches an action with the mutation cb as a param
+ * - mutation callback is invoked with links
  */
 const init = {
   links: [],
   error: "",
+  pamphlet_link: "",
+};
+
+// TODO Add form validation
+const usePamphletReducer = () => {
+  const [{ links, errors, pamphlet_link }, dispatch] = useReducer(
+    reducer,
+    init
+  );
+
+  const [mutAddPamphlet, { loading }] = useMutation(ADD_PAMPHLET, {
+    onCompleted: (data) =>
+      dispatch(
+        addPamphletLink(
+          data.createPamphlet.user,
+          data.createPamphlet.pamphlet_slug,
+          data.createPamphlet.links_array
+        )
+      ),
+    onError: (error) => dispatch(addError(error)),
+  });
+
+  return {
+    links,
+    errors,
+    loading,
+    pamphlet_link,
+    addLink: () => dispatch(addLink()),
+    submitPamphlet: () => mutAddPamphlet({ variables: { linksArray: links } }),
+    updateEntry: (index) => (name, link) =>
+      dispatch(updateEntry(index, name, link)),
+    deleteEntry: (index) => dispatch(deleteEntry(index)),
+    addError: (error) => dispatch(addError(error)),
+    resetError: () => dispatch(resetError()),
+  };
 };
 
 const addLinkHandler = ({ links, ...state }, action) => {
   return { ...state, links: [...links, { name: "", link: "" }] };
 };
-const updateEntryHandler = ({ links, state }, { index, name, url }) => {
+
+const addPamphletLinkHandler = (
+  state,
+  { user, pamphlet_slug, links_array }
+) => {
+  const finalUrl = `/${user}/${pamphlet_slug}`;
+  return { ...state, pamphlet_link: finalUrl, links: links_array };
+};
+
+const updateEntryHandler = ({ links, ...state }, { index, name, link }) => {
   const result = [...links];
-  result[index] = { name, url };
+  result[index] = { name, link };
   return { ...state, links: result };
 };
 
-const deleteEntryHandler = ({ links, state }, { index }) => {
+const deleteEntryHandler = ({ links, ...state }, { index }) => {
   return { ...state, links: links.filter((link, i) => i !== index) };
 };
 
@@ -44,25 +114,11 @@ const resetErrorHandler = (state, action) => {
 
 const reducer = createReducer(init, {
   ADD_LINK: addLinkHandler,
+  ADD_PAMPHLET_LINK: addPamphletLinkHandler,
   UPDATE_ENTRY: updateEntryHandler,
   DELETE_ENTRY: deleteEntryHandler,
   ADD_ERROR: addErrorHandler,
   RESET_ERROR: resetErrorHandler,
 });
-
-const usePamphletReducer = () => {
-  const [state, dispatch] = useReducer(reducer, init);
-  const { links, errors } = state;
-  return {
-    links,
-    errors,
-    addLink: () => dispatch(addLink()),
-    updateEntry: (index) => (name, url) =>
-      dispatch(updateEntry(index, name, url)),
-    deleteEntry: (index) => dispatch(deleteEntry(index)),
-    addError: (error) => dispatch(addError(error)),
-    resetError: () => dispatch(resetError()),
-  };
-};
 
 export default usePamphletReducer;
