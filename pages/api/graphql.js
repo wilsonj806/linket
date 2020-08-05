@@ -1,5 +1,6 @@
 import { ApolloServer, gql } from "apollo-server-micro";
 import db from "../../db/config";
+import generateRandomSlug from "../../utils/generateSlug";
 
 const typeDefs = gql`
   type Query {
@@ -48,15 +49,27 @@ const resolvers = {
   },
 
   Mutation: {
+    // TODO will need to update this when user auth is added
     createPamphlet: (_, { linksArray }, __) => {
       // generate pamphlet slug
-      // post to database
-      console.log(args);
+      const slug = generateRandomSlug();
 
-      return {
-        pamphlet_slug: "jjjj",
-        user: "ano",
-      };
+      // Check if slug exists(overkill for now)
+      // db.select("*")
+      //   .from("pamphlets")
+      //   .where({ pamphlet_slug: slug})
+      //   .then((value) => {
+      //     if (value.length > 0) {
+      //     }
+      //   })
+
+      // Post to the database and return the result
+      return db("pamphlets")
+        .returning(["pamphlet_slug", "user"])
+        .insert({ links_array: linksArray, pamphlet_slug: slug })
+        .then((vals) => {
+          return vals[0];
+        });
     },
   },
 };
