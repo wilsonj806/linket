@@ -23,7 +23,7 @@ const init = {
 };
 
 const addLinkHandler = ({ links, ...state }, action) => {
-  return { ...state, links: [...links, { name: "", url: "" }] };
+  return { ...state, links: [...links, { name: "", link: "" }] };
 };
 const updateEntryHandler = ({ links, state }, { index, name, url }) => {
   const result = [...links];
