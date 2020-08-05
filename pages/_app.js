@@ -1,15 +1,24 @@
 import React from "react";
 
-import { ApolloProvider } from "@apollo/react-hooks";
-import ApolloClient from "apollo-boost";
+import {
+  ApolloClient,
+  ApolloProvider,
+  InMemoryCache,
+  createHttpLink,
+} from "@apollo/client";
 
 export const endpoint =
   process.env.NODE_ENV === "production"
     ? ""
     : "http://localhost:3000/api/graphql";
 
+// Apollo Client config
+const cache = new InMemoryCache();
+const link = createHttpLink({ uri: endpoint });
+
 export const client = new ApolloClient({
-  uri: endpoint,
+  link,
+  cache,
 });
 
 function CustomApp({ Component, pageProps }) {

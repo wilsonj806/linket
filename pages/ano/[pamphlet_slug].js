@@ -1,11 +1,10 @@
 import React from "react";
 import { useRouter } from "next/router";
-import { useQuery } from "@apollo/react-hooks";
-import { gql } from "apollo-boost";
+import { gql, useQuery } from "@apollo/client";
 
-import { client } from "../_app";
+// import { client } from "../_app";
 
-// TODO: Get static site generation up with getStaticProps/ getStaticPath??
+// FIXME: HANDLE REDIRECT IF THE SLUG CANNOT BE FOUND
 
 const GET_PAMPHLET = gql`
   query pamphlet($pamphlet_slug: String!) {
