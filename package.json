@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "heroku-postbuild": "npm run build && echo 'Add cleanup script'",
     "start": "next start",
     "test": "jest --config=jest.config.js",
     "knex:migrate": "knex migrate:latest",
