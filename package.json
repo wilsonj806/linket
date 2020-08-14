@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "heroku-postbuild": "npm run build && echo 'Add cleanup script'",
-    "start": "next start",
+    "start": "next start -p $PORT",
     "test": "jest --config=jest.config.js",
     "knex:migrate": "knex migrate:latest",
     "knex:seed": "knex seed:run",
