@@ -9,7 +9,7 @@ import {
 
 export const endpoint =
   process.env.NODE_ENV === "production"
-    ? ""
+    ? "https://wjlinket.herokuapp.com/api/graphql"
     : "http://localhost:3000/api/graphql";
 
 // Apollo Client config
