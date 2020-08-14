@@ -18,7 +18,7 @@ jobs:
           key: v0-npm-cache-{{ checksum "package-lock.json"}}
           paths:
             - ./node_modules
-      - run: echo "Testing app"
+      - run: npm run test
   build-app:
     executor:
       name: node/default
@@ -39,7 +39,7 @@ jobs:
 workflows:
   build-deploy:
     jobs:
-      - test-react
+      - test-code
       - build-app:
           requires:
-            - test-react
+            - test-code

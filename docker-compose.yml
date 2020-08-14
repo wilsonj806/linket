@@ -1,0 +1,20 @@
+# NOTE WARNING: Config not fit for production
+version: "3.3"
+services:
+  linket:
+    build:
+      context: .
+    image: linket:0.0.0
+    volumes:
+      - .:/usr/src/app
+    env_file:
+      - .env.local
+    ports:
+      - 3000:3000
+  postgres:
+    container_name: linket-db
+    image: postgres
+    env_file:
+      - .env.local
+    ports:
+      - 5432:5432
