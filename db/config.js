@@ -9,7 +9,7 @@ const db = knex({
     user: process.env.POSTGRES_USER,
     password: process.env.POSTGRES_PASSWORD,
     database: process.env.POSTGRES_DB,
-    port: process.env.PORT ? process.env.PORT : 5432,
+    port: process.env.DB_PORT ? process.env.DB_PORT : 5432,
   },
 });
 
