@@ -28,16 +28,59 @@ const Pamphlet = () => {
   });
   console.log(data);
   return (
-    <div>
-      <h1>My pamphlet</h1>
-      {loading
-        ? "Loading..."
-        : data.pamphlet.links_array.map((link, i) => (
-            <a href={link.link} key={i} style={{ display: "block" }}>
-              {link.name}
-            </a>
-          ))}
-    </div>
+    <>
+      <style jsx>{`
+        .article {
+          width: 100%;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .pamphlet {
+          padding-top: 40px;
+          width: 320px;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          flex-flow: column nowrap;
+        }
+
+        .pamphlet-link {
+          margin: 8px;
+          padding: 8px;
+          border: 0px solid transparent;
+          display: block;
+          background: pink;
+          text-decoration: none;
+        }
+
+        .pamphlet-link:link,
+        .pamphlet-link:visited {
+          color: white;
+        }
+
+        .pamphlet-link:hover {
+          background: red;
+        }
+      `}</style>
+      <article className="article">
+        <div className="pamphlet">
+          <h1>My pamphlet</h1>
+          {loading
+            ? "Loading..."
+            : data
+            ? data.pamphlet.links_array.map((link, i) => (
+                <a className="pamphlet-link" href={link.link} key={i}>
+                  {link.name}
+                </a>
+              ))
+            : "it broke"}
+        </div>
+      </article>
+    </>
   );
 };
 
