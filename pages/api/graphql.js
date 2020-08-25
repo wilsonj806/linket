@@ -1,4 +1,6 @@
 import { ApolloServer, gql } from "apollo-server-micro";
+import cors from "cors";
+
 import db from "../../db/config";
 import generateRandomSlug from "../../utils/generateSlug";
 
@@ -86,9 +88,9 @@ const resolvers = {
   },
 };
 
-// const cors = Cors({
-//   allowMethods: ['GET', 'POST', 'OPTIONS']
-// })
+const cors = Cors({
+  allowMethods: ["GET", "POST", "OPTIONS"],
+});
 
 const apolloServer = new ApolloServer({
   typeDefs,
@@ -103,4 +105,4 @@ export const config = {
 const handler = apolloServer.createHandler({ path: "/api/graphql" });
 
 // export default cors(handler)
-export default handler;
+export default process.env.NODE_ENV === "production" ? cors(handler) : handler;
