@@ -24,6 +24,7 @@ const PostNewPamphlet = () => {
     ? links.map((linkObj, i) => (
         <Input
           key={i}
+          index={i}
           updateStateFn={updateEntry(i)}
           name={linkObj["name"]}
           link={linkObj["link"]}
@@ -33,44 +34,46 @@ const PostNewPamphlet = () => {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    console.log("potato");
     submitPamphlet();
   };
   const handleNameChange = ({ target }) => {
     updateName(target.value);
   };
   return (
-    <section>
-      {pamphlet_link !== "" ? (
-        <div>
-          <h2>Here's the link to the new pamphlet</h2>
-          <Link href={pamphlet_link}>
-            <a>My pamphlet link</a>
-          </Link>{" "}
-        </div>
-      ) : null}
-      <form>
-        <h1>Create a new pamphlet</h1>
-        <label className={styles["input--name"]}>
-          <span>Pamphlet Name</span>
-          <input
-            name="pamphlet_name"
-            type="text"
-            value={pamphlet_name}
-            onChange={handleNameChange}
-          />
-        </label>
-        <button type="button" className={styles.btn} onClick={addLink}>
-          Add A Link
-        </button>
-        {ToRender}
+    <article className={styles.article}>
+      <div className={styles["form-container"]}>
+        {errors ? errors : ""}
+        {pamphlet_link !== "" ? (
+          <div>
+            <h2>Here's the link to the new pamphlet</h2>
+            <Link href={pamphlet_link}>
+              <a>My pamphlet link</a>
+            </Link>{" "}
+          </div>
+        ) : null}
+        <form className={styles.form}>
+          <h1>Create a new pamphlet</h1>
+          <label className={styles["input--name"]}>
+            <span>Pamphlet Name</span>
+            <input
+              name="pamphlet_name"
+              type="text"
+              value={pamphlet_name}
+              onChange={handleNameChange}
+            />
+          </label>
+          <button type="button" className={styles.btn} onClick={addLink}>
+            Add A Link
+          </button>
+          {ToRender}
 
-        <button className="btn btn-submit" type="button" onClick={handleSubmit}>
-          Submit
-        </button>
-      </form>
+          <button className={styles.btn} type="button" onClick={handleSubmit}>
+            Submit
+          </button>
+        </form>
+      </div>
       <div>My preview panel here</div>
-    </section>
+    </article>
   );
 };
 

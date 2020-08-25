@@ -1,0 +1,68 @@
+.article {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+
+.form-container {
+  max-width: 320px;
+  height: 100%;
+}
+
+.form {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.wrap-dyn-input {
+  display: flex;
+  align-items: center;
+  margin-bottom: 16px;
+  max-width: 320px;
+}
+
+.dynamic-input-count {
+  display: block;
+  font-size: 28px;
+  margin-right: 8px;
+}
+
+.dynamic-label + .dynamic-label {
+  margin-left: 8px;
+}
+
+.dynamic-label > * {
+  display: block;
+  max-width: 130px;
+}
+
+.input--name {
+  margin-bottom: 8px;
+}
+
+.input--name > * {
+  display: block;
+  min-width: 300px;
+}
+
+.btn {
+  background: pink;
+  border-radius: 2px;
+  padding: 8px;
+  color: white;
+  border: 0 solid transparent;
+  min-width: 320px;
+  margin-bottom: 8px;
+}
+
+@media screen and (min-width: 1024px) {
+  .form-container {
+    max-width: 100%;
+  }
+}
