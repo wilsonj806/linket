@@ -3,6 +3,8 @@ import Input from "../components/DynFormInput";
 import usePamphlet from "../hooks/usePamphletReducer";
 import Link from "next/link";
 
+import styles from "../styles/post.module.css";
+
 // This is a dynamic form, we're adding and removing inputs
 
 const PostNewPamphlet = () => {
@@ -11,6 +13,8 @@ const PostNewPamphlet = () => {
     loading,
     errors,
     pamphlet_link,
+    pamphlet_name,
+    updateName,
     addLink,
     updateEntry,
     submitPamphlet,
@@ -32,6 +36,9 @@ const PostNewPamphlet = () => {
     console.log("potato");
     submitPamphlet();
   };
+  const handleNameChange = ({ target }) => {
+    updateName(target.value);
+  };
   return (
     <section>
       {pamphlet_link !== "" ? (
@@ -44,7 +51,16 @@ const PostNewPamphlet = () => {
       ) : null}
       <form>
         <h1>Create a new pamphlet</h1>
-        <button type="button" className="btn btn-add-new" onClick={addLink}>
+        <label className={styles["input--name"]}>
+          <span>Pamphlet Name</span>
+          <input
+            name="pamphlet_name"
+            type="text"
+            value={pamphlet_name}
+            onChange={handleNameChange}
+          />
+        </label>
+        <button type="button" className={styles.btn} onClick={addLink}>
           Add A Link
         </button>
         {ToRender}
