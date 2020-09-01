@@ -1,5 +1,5 @@
 import { ApolloServer, gql } from "apollo-server-micro";
-import cors from "cors";
+import Cors from "cors";
 
 import db from "../../db/config";
 import generateRandomSlug from "../../utils/generateSlug";
