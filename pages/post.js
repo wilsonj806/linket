@@ -17,6 +17,7 @@ const PostNewPamphlet = () => {
     updateName,
     addLink,
     updateEntry,
+    deleteEntry,
     submitPamphlet,
   } = usePamphlet();
 
@@ -25,6 +26,7 @@ const PostNewPamphlet = () => {
         <Input
           key={i}
           index={i}
+          deleteEntryFn={deleteEntry}
           updateStateFn={updateEntry(i)}
           name={linkObj["name"]}
           link={linkObj["link"]}
@@ -42,7 +44,6 @@ const PostNewPamphlet = () => {
   return (
     <article className={styles.article}>
       <div className={styles["form-container"]}>
-        {errors ? errors : ""}
         {pamphlet_link !== "" ? (
           <div>
             <h2>Here's the link to the new pamphlet</h2>
@@ -62,7 +63,13 @@ const PostNewPamphlet = () => {
               onChange={handleNameChange}
             />
           </label>
-          <button type="button" className={styles.btn} onClick={addLink}>
+          <span>{errors ? errors : ""}</span>
+          <button
+            type="button"
+            className={styles.btn}
+            onClick={addLink}
+            disabled={links.length === 5 ? true : false}
+          >
             Add A Link
           </button>
           {ToRender}

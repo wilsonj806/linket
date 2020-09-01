@@ -2,7 +2,13 @@ import React from "react";
 
 import styles from "../styles/post.module.css";
 
-const DynamicFormInput = ({ updateStateFn, name, link, index }) => {
+const DynamicFormInput = ({
+  deleteEntryFn,
+  updateStateFn,
+  name,
+  link,
+  index,
+}) => {
   const handleChange = ({ target }) => {
     if (target.name === "Link Name") {
       updateStateFn(target.value, link);
@@ -31,6 +37,13 @@ const DynamicFormInput = ({ updateStateFn, name, link, index }) => {
           value={link}
         />
       </label>
+      <button
+        className={styles["btn-trash"]}
+        type="button"
+        onClick={() => deleteEntryFn(index)}
+      >
+        X
+      </button>
     </div>
   );
 };
