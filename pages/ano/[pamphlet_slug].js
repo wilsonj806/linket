@@ -2,6 +2,8 @@ import React from "react";
 import { useRouter } from "next/router";
 import { gql, useQuery } from "@apollo/client";
 
+import styles from "../../styles/post.module.css";
+
 // import { client } from "../_app";
 
 // FIXME: HANDLE REDIRECT IF THE SLUG CANNOT BE FOUND
@@ -20,13 +22,13 @@ const GET_PAMPHLET = gql`
   }
 `;
 
-const Pamphlet = () => {
+const Pamphlet = (props) => {
   const router = useRouter();
   const { pamphlet_slug } = router.query;
   const { loading, data, error } = useQuery(GET_PAMPHLET, {
     variables: { pamphlet_slug },
   });
-  console.log(data);
+  console.log(props);
   return (
     <>
       <style jsx>{`
@@ -73,7 +75,7 @@ const Pamphlet = () => {
             ? "Loading..."
             : data
             ? data.pamphlet.links_array.map((link, i) => (
-                <a className="pamphlet-link" href={link.link} key={i}>
+                <a className={styles.btn} href={link.link} key={i}>
                   {link.name}
                 </a>
               ))
@@ -83,5 +85,22 @@ const Pamphlet = () => {
     </>
   );
 };
+
+/**
+ *  TL; DR we need to have a new instance of the ApolloClient for each time we load the SSR page.
+ * So we need a function to figure out if we have initial state
+ * ... and then figure out if we're doing SSR/ SSG
+ * ... and if we do SSR then we use the Apollo client to make our query and then pass it to props via cache extraction
+ *
+ * Look up the with-apollo example in the Next.js repo
+ */
+export async function getServerSideProps(context) {
+  console.dir(context);
+  return {
+    props: {
+      mySampleProp: "HI THERE",
+    },
+  };
+}
 
 export default Pamphlet;
