@@ -52,10 +52,12 @@ const resetError = makeActionCreator("RESET_ERROR");
 const init = {
   pamphlet_name: "",
   links: [],
-  error: "",
+  errors: "",
   pamphlet_link: "",
 };
 
+// TODO Add form validation
+// TODO figure out caching??
 // TODO Add form validation
 const usePamphletReducer = () => {
   const [
