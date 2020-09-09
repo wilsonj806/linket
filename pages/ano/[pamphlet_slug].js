@@ -17,6 +17,7 @@ const GET_PAMPHLET = gql`
         name
       }
       pamphlet_slug
+      pamphlet_name
       user
     }
   }
@@ -28,7 +29,19 @@ const Pamphlet = (props) => {
   const { loading, data, error } = useQuery(GET_PAMPHLET, {
     variables: { pamphlet_slug },
   });
-  console.log(props);
+
+  const ToRender = loading ? (
+    <h1>Loading...</h1>
+  ) : (
+    <>
+      <h1>{data.pamphlet.pamphlet_name}</h1>
+      {data.pamphlet.links_array.map((link, i) => (
+        <a className={styles.btn} href={link.link} key={i}>
+          {link.name}
+        </a>
+      ))}
+    </>
+  );
   return (
     <>
       <style jsx>{`
@@ -69,18 +82,7 @@ const Pamphlet = (props) => {
         }
       `}</style>
       <article className="article">
-        <div className="pamphlet">
-          <h1>My pamphlet</h1>
-          {loading
-            ? "Loading..."
-            : data
-            ? data.pamphlet.links_array.map((link, i) => (
-                <a className={styles.btn} href={link.link} key={i}>
-                  {link.name}
-                </a>
-              ))
-            : "it broke"}
-        </div>
+        <div className="pamphlet">{ToRender}</div>
       </article>
     </>
   );
@@ -94,13 +96,13 @@ const Pamphlet = (props) => {
  *
  * Look up the with-apollo example in the Next.js repo
  */
-export async function getServerSideProps(context) {
-  console.dir(context);
-  return {
-    props: {
-      mySampleProp: "HI THERE",
-    },
-  };
-}
+// export async function getServerSideProps(context) {
+//   console.dir(context);
+//   return {
+//     props: {
+//       mySampleProp: "HI THERE",
+//     },
+//   };
+// }
 
 export default Pamphlet;
