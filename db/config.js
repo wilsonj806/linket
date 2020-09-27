@@ -18,6 +18,7 @@ db.raw("SELECT 1")
     console.log("DB up");
   })
   .catch((err) => {
+    console.log("Database Error, error follows this message:");
     throw err;
   });
 

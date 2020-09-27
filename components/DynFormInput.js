@@ -1,6 +1,14 @@
 import React from "react";
 
-const DynamicFormInput = ({ updateStateFn, name, link }) => {
+import styles from "../styles/post.module.css";
+
+const DynamicFormInput = ({
+  deleteEntryFn,
+  updateStateFn,
+  name,
+  link,
+  index,
+}) => {
   const handleChange = ({ target }) => {
     if (target.name === "Link Name") {
       updateStateFn(target.value, link);
@@ -9,8 +17,9 @@ const DynamicFormInput = ({ updateStateFn, name, link }) => {
     }
   };
   return (
-    <div>
-      <label>
+    <div className={styles["wrap-dyn-input"]}>
+      <span className={styles["dynamic-input-count"]}>{`${index + 1}.`}</span>
+      <label className={styles["dynamic-label"]}>
         <span>Link Name</span>
         <input
           type="text"
@@ -19,7 +28,7 @@ const DynamicFormInput = ({ updateStateFn, name, link }) => {
           value={name}
         />
       </label>
-      <label>
+      <label className={styles["dynamic-label"]}>
         <span>Link URL</span>
         <input
           type="text"
@@ -28,6 +37,13 @@ const DynamicFormInput = ({ updateStateFn, name, link }) => {
           value={link}
         />
       </label>
+      <button
+        className={styles["btn-trash"]}
+        type="button"
+        onClick={() => deleteEntryFn(index)}
+      >
+        X
+      </button>
     </div>
   );
 };

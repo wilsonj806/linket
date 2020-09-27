@@ -1,4 +1,6 @@
 import { ApolloServer, gql } from "apollo-server-micro";
+import Cors from "cors";
+
 import db from "../../db/config";
 import generateRandomSlug from "../../utils/generateSlug";
 
@@ -8,18 +10,23 @@ const typeDefs = gql`
   }
 
   type Mutation {
-    createPamphlet(linksArray: [InputLinkObj!]!): PamphletReturn
+    createPamphlet(
+      linksArray: [InputLinkObj!]!
+      pamphletName: String!
+    ): PamphletReturn
   }
 
   type Pamphlet {
     id: Int!
     user: String!
+    pamphlet_name: String!
     pamphlet_slug: String!
     links_array: [LinkObj!]!
   }
 
   type PamphletReturn {
     user: String!
+    pamphlet_name: String!
     pamphlet_slug: String!
     links_array: [LinkObj!]!
   }
@@ -39,7 +46,7 @@ const resolvers = {
   Query: {
     pamphlet: (_, args, __) => {
       return db
-        .column("id", "pamphlet_slug", "links_array", "user")
+        .column("id", "pamphlet_slug", "links_array", "user", "pamphlet_name")
         .select()
         .first()
         .from("pamphlets")
@@ -51,7 +58,7 @@ const resolvers = {
 
   Mutation: {
     // TODO will need to update this when user auth is added
-    createPamphlet: (_, { linksArray }, __) => {
+    createPamphlet: (_, { linksArray, pamphletName }, __) => {
       // generate pamphlet slug
       const slug = generateRandomSlug();
 
@@ -65,18 +72,25 @@ const resolvers = {
       //   })
       // Post to the database and return the result
       return db("pamphlets")
-        .returning(["pamphlet_slug", "user", "links_array"])
+        .returning(["pamphlet_name", "pamphlet_slug", "user", "links_array"])
         .insert([
-          { links_array: JSON.stringify(linksArray), pamphlet_slug: slug },
+          {
+            links_array: JSON.stringify(linksArray),
+            pamphlet_slug: slug,
+            pamphlet_name: pamphletName,
+          },
         ])
-        .then((vals) => vals[0]);
+        .then((vals) => vals[0])
+        .catch((err) => {
+          throw err;
+        });
     },
   },
 };
 
-// const cors = Cors({
-//   allowMethods: ['GET', 'POST', 'OPTIONS']
-// })
+const cors = Cors({
+  allowMethods: ["GET", "POST", "OPTIONS"],
+});
 
 const apolloServer = new ApolloServer({
   typeDefs,
@@ -91,4 +105,4 @@ export const config = {
 const handler = apolloServer.createHandler({ path: "/api/graphql" });
 
 // export default cors(handler)
-export default handler;
+export default process.env.NODE_ENV === "production" ? cors(handler) : handler;

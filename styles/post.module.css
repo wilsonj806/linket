@@ -1,0 +1,105 @@
+.article {
+  width: 100%;
+  min-height: 100vh;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-flow: column nowrap;
+}
+
+.form-container {
+  max-width: 320px;
+  height: 100%;
+}
+
+.form {
+  margin: auto;
+  width: 100%;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+}
+
+.wrap-dyn-input {
+  display: flex;
+  align-items: flex-end;
+  margin-bottom: 16px;
+  max-width: 320px;
+}
+
+.dynamic-input-count {
+  display: block;
+  font-size: 24px;
+  margin-right: 8px;
+}
+
+.dynamic-label + .dynamic-label {
+  margin-left: 8px;
+}
+
+.dynamic-label > * {
+  display: block;
+}
+.dynamic-label:first-of-type > * {
+  max-width: 100px;
+}
+.dynamic-label:last-of-type > * {
+  display: block;
+  max-width: 120px;
+}
+
+.input--name {
+  margin-bottom: 8px;
+}
+
+.input--name > * {
+  display: block;
+  min-width: 300px;
+}
+
+.btn {
+  background: pink;
+  border-radius: 2px;
+  padding: 8px;
+  color: white;
+  border: 0 solid transparent;
+  min-width: 320px;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.btn:link {
+  text-decoration: none;
+  color: white;
+}
+
+.btn:hover,
+.btn:active {
+  background: rgb(216, 133, 147);
+}
+
+.btn:disabled {
+  background: lightgrey;
+}
+
+.btn-trash {
+  width: 30px;
+  height: 30px;
+  padding: 8px;
+  margin-left: 8px;
+  border-radius: 4px;
+  border: 0px solid transparent;
+  color: white;
+  background: rgb(224, 35, 35);
+}
+
+.btn-trash:hover,
+.btn-trash:active {
+  background: rgb(165, 33, 33);
+}
+
+@media screen and (min-width: 1024px) {
+  .form-container {
+    max-width: 100%;
+  }
+}

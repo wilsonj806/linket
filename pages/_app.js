@@ -7,6 +7,8 @@ import {
   createHttpLink,
 } from "@apollo/client";
 
+import "../styles/global.css";
+
 export const endpoint =
   process.env.NODE_ENV === "production"
     ? "https://wjlinket.herokuapp.com/api/graphql"

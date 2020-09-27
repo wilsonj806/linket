@@ -2,6 +2,8 @@ import React from "react";
 import { useRouter } from "next/router";
 import { gql, useQuery } from "@apollo/client";
 
+import styles from "../../styles/post.module.css";
+
 // import { client } from "../_app";
 
 // FIXME: HANDLE REDIRECT IF THE SLUG CANNOT BE FOUND
@@ -20,25 +22,85 @@ const GET_PAMPHLET = gql`
   }
 `;
 
-const Pamphlet = () => {
+const Pamphlet = (props) => {
   const router = useRouter();
   const { pamphlet_slug } = router.query;
   const { loading, data, error } = useQuery(GET_PAMPHLET, {
     variables: { pamphlet_slug },
   });
-  console.log(data);
+  console.log(props);
   return (
-    <div>
-      <h1>My pamphlet</h1>
-      {loading
-        ? "Loading..."
-        : data.pamphlet.links_array.map((link, i) => (
-            <a href={link.link} key={i} style={{ display: "block" }}>
-              {link.name}
-            </a>
-          ))}
-    </div>
+    <>
+      <style jsx>{`
+        .article {
+          width: 100%;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+
+        .pamphlet {
+          padding-top: 40px;
+          width: 320px;
+          min-height: 100vh;
+          display: flex;
+          align-items: center;
+          justify-content: flex-start;
+          flex-flow: column nowrap;
+        }
+
+        .pamphlet-link {
+          margin: 8px;
+          padding: 8px;
+          border: 0px solid transparent;
+          display: block;
+          background: pink;
+          text-decoration: none;
+        }
+
+        .pamphlet-link:link,
+        .pamphlet-link:visited {
+          color: white;
+        }
+
+        .pamphlet-link:hover {
+          background: red;
+        }
+      `}</style>
+      <article className="article">
+        <div className="pamphlet">
+          <h1>My pamphlet</h1>
+          {loading
+            ? "Loading..."
+            : data
+            ? data.pamphlet.links_array.map((link, i) => (
+                <a className={styles.btn} href={link.link} key={i}>
+                  {link.name}
+                </a>
+              ))
+            : "it broke"}
+        </div>
+      </article>
+    </>
   );
 };
+
+/**
+ *  TL; DR we need to have a new instance of the ApolloClient for each time we load the SSR page.
+ * So we need a function to figure out if we have initial state
+ * ... and then figure out if we're doing SSR/ SSG
+ * ... and if we do SSR then we use the Apollo client to make our query and then pass it to props via cache extraction
+ *
+ * Look up the with-apollo example in the Next.js repo
+ */
+export async function getServerSideProps(context) {
+  console.dir(context);
+  return {
+    props: {
+      mySampleProp: "HI THERE",
+    },
+  };
+}
 
 export default Pamphlet;
