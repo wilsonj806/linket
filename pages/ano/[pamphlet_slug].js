@@ -1,4 +1,5 @@
 import React from "react";
+import Link from "next/link";
 import { useRouter } from "next/router";
 import { gql, useQuery } from "@apollo/client";
 
@@ -82,7 +83,12 @@ const Pamphlet = (props) => {
         }
       `}</style>
       <article className="article">
-        <div className="pamphlet">{ToRender}</div>
+        <div className="pamphlet">
+          {ToRender}
+          <Link href="/">
+            <a className={styles["btn-home"]}>Go Back Home</a>
+          </Link>
+        </div>
       </article>
     </>
   );

@@ -1,7 +1,7 @@
 import React from "react";
+import Link from "next/link";
 import Input from "../components/DynFormInput";
 import usePamphlet from "../hooks/usePamphletReducer";
-import Link from "next/link";
 
 import styles from "../styles/post.module.css";
 
@@ -78,6 +78,9 @@ const PostNewPamphlet = () => {
             Submit
           </button>
         </form>
+        <Link href="/">
+          <a className={styles.btn}>Go Back Home</a>
+        </Link>
       </div>
       <div>My preview panel here</div>
     </article>
