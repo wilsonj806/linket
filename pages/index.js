@@ -1,5 +1,6 @@
 import Head from "next/head";
 import Link from "next/link";
+import styles from "../styles/post.module.css";
 
 export default function Home() {
   return (
@@ -23,7 +24,7 @@ export default function Home() {
         </p>
 
         <Link href="/post">
-          <a className="button">Start Building!</a>
+          <a className={styles["btn-home"]}>Start Building!</a>
         </Link>
       </main>
 
@@ -81,11 +82,6 @@ export default function Home() {
           display: flex;
           justify-content: center;
           align-items: center;
-        }
-
-        a {
-          color: inherit;
-          text-decoration: none;
         }
 
         .title a {

@@ -79,7 +79,7 @@ const PostNewPamphlet = () => {
           </button>
         </form>
         <Link href="/">
-          <a className={styles.btn}>Go Back Home</a>
+          <a className={styles["btn-home"]}>Go Back Home</a>
         </Link>
       </div>
       <div>My preview panel here</div>
